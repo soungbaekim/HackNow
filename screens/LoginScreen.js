@@ -2,11 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from '../components/SIButton.js';
 
-export default function LoginScreen() {
+export default function LoginScreen(props) {
   return(
     <View style={styles.container}>
-      <Button/>
-
+      <Button onPress={props.signin}/>
     </View>
     )
 
