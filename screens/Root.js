@@ -41,8 +41,6 @@ export default function Root(props) {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        isLoginedin(true);
-
         SplashScreen.hide();
       }
     }

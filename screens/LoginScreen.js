@@ -3,43 +3,32 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 
-readonly state:  State{
-	email: "";
-	password: "";
-}
+class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props);
 
-class LoginScreen extends React.Component<{}, State> {
+    this.state = {
+      email: "",
+      passsword: "",
+    }
+  }
 
-
-readonly state: State = {
-	email: "",
-	password: ""
-};
-
-handleEmailChange = (email: string_ => {
-	this.setState({email: email});
-})
+  handleEmailChange = (email) => {
+  	this.setState({email: email});
+  };
 
 
 
+  render(){
+    return(
+      <View style={styles.container}>
+        <FormInputText placeholder = "Email"/>
+        <FormInputText/>
+        <Button onPress={this.props.signin}/>
+      </View>
+      );
 
-render(){
-  return(
-    <View style={styles.container}>
-      <FormInputText placeholder = "Email"/>
-      <FormInputText/>
-      <Button/>
-
-=======
-export default function LoginScreen(props) {
-  return(
-    <View style={styles.container}>
-      <Button onPress={props.signin}/>
->>>>>>> d5cf1d9201ece61c5b93e46d14872a09b8680e19
-    </View>
-    );
-
-}
+  }
 }
 
 const styles = StyleSheet.create({
@@ -50,8 +39,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-<<<<<<< HEAD
 
 export default LoginScreen;
-=======
->>>>>>> d5cf1d9201ece61c5b93e46d14872a09b8680e19
