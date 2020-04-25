@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 
+<<<<<<< HEAD
 readonly state:  State{
 	email: "";
 	password: "";
@@ -30,6 +31,12 @@ render(){
       <FormInputText/>
       <Button/>
 
+=======
+export default function LoginScreen(props) {
+  return(
+    <View style={styles.container}>
+      <Button onPress={props.signin}/>
+>>>>>>> d5cf1d9201ece61c5b93e46d14872a09b8680e19
     </View>
     );
 
@@ -44,5 +51,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+<<<<<<< HEAD
 
 export default LoginScreen;
+=======
+>>>>>>> d5cf1d9201ece61c5b93e46d14872a09b8680e19
