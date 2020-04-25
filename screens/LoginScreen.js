@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 
-<<<<<<< HEAD
 readonly state:  State{
 	email: "";
 	password: "";
