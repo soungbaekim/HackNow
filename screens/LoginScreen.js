@@ -3,11 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function LoginScreen() {
   return(
-    <div className = 'loginScreen'>
+    <View className = 'loginScreen'>
       <Text>DashBro</Text>
 
-    </div>
-
+    </View>
     )
 
 };
