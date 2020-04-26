@@ -12,9 +12,52 @@ class LoginScreen extends React.Component {
     this.state = {
       password: "",
       username: "",
-      isRegister: false
+      isRegister: false,
+      users: {},
+      //isLoading: false,
     }
   }
+//async get_users = () =>
+  get_users() {
+    db.ref('/users').on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      let userItems = {...data};
+      this.setState({
+        users: userItems,
+      });
+    });
+  }
+
+
+  create_user(name, username, image, age, bio) {
+    db.ref('/users').push({
+      NAME: name,
+      USERNAME: username,
+      IMAGE: image,
+      AGE: age,
+      BIO: bio,
+      //ID: id,
+      Runs: new Map(),
+    });
+  }
+  create_race(distance) {
+    db.ref('/races').push({
+      NAME: name,
+      USERNAME: username,
+      IMAGE: image,
+      AGE: age,
+      BIO: bio,
+      //ID: id,
+      Runs: new Map(),
+    });
+}
+
+
+
+ clearUsers() {
+    db.ref('/users').remove();
+  }
+
 
 
   handlePasswordChange = (password) =>
@@ -38,8 +81,12 @@ class LoginScreen extends React.Component {
   };
 
 
+  componentDidMount() {
+    get_users();
+  }
 
   render(){
+    console.log(this.state.users);
     if (this.state.isRegister)
     {
       return(
