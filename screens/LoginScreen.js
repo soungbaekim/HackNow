@@ -20,10 +20,29 @@ class LoginScreen extends React.Component {
       races: {},
       runners: {},
       posts: {},
+      counter: 0,
       //isLoading: false,
     }
   }
 //async get_users = () =>
+  get_counter() {
+    db.ref('/counter').on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      let counterItems = {...data};
+      this.setState({
+        counter: counterItems["-M5odzC9IMeSaRd5mS7-"].VAL,
+      });
+    });
+  }
+
+  update_counter(){
+    db.ref('/counter').update({
+      ["-M5odzC9IMeSaRd5mS7-"]: {
+        VAL: this.state.counter + 1
+      },
+    });
+  }
+
   get_users() {
     db.ref('/users').on('value', querySnapShot => {
       let data = querySnapShot.val() ? querySnapShot.val() : {};
@@ -32,6 +51,17 @@ class LoginScreen extends React.Component {
         users: userItems,
       });
     });
+  }
+
+  get_runners() {
+    db.ref('/runners').on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      let runnerItems = {...data};
+      this.setState({
+        runners: runnerItems,
+      });
+    });
+
   }
 
   get_races() {
@@ -44,7 +74,18 @@ class LoginScreen extends React.Component {
     });
   }
 
+  get_posts() {
+    db.ref('/posts').on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      let raceItems = {...data};
+      this.setState({
+        posts: raceItems,
+      });
+    });
+  }
+
   create_user(name, username, image, age, bio, password) {
+    
     db.ref('/users').push({
       NAME: name,
       USERNAME: username,
@@ -54,17 +95,49 @@ class LoginScreen extends React.Component {
       PASSWORD: password,
       RUNS: new Map(),
     });
+    return username
+
   }
 
   create_race(name, distance) {
+
     db.ref('/races').push({
       NAME: name,
       START: null,
-      DISTANCE: distance,
+      DISTANCE: distance, //in miles
       STATE: 0, //0-Ready, 1-Running, 2-Done
-      RUNNERS: new Map()
+      RUNNERS: new Map(),
+      ID: this.state.counter
     });
-}
+    this.update_counter()
+    return this.state.counter-1
+  }
+
+  create_runner(race_id, username){
+    db.ref('/runners').push({
+      RACEID: race_id,
+      NAME: username,
+      STATE: -1, //(-1)-NotReady, 0-Ready, 1-Running, 2-Done
+      DISTANCE: 0, //in miles
+      TIME: 0,
+      ID: this.state.counter
+    });
+    this.update_counter()
+    return this.state.counter-1
+  }
+
+  create_post(username, race_id, rank){
+      db.ref('/posts').push({
+        POSTER: username,
+        RACE: race_id,
+        RANK: rank
+        ID: this.state.counter
+      });
+      this.update_counter()
+      return this.state.counter - 1
+    }
+  }
+
 
 
  clearUsers() {
@@ -116,12 +189,13 @@ class LoginScreen extends React.Component {
 
 
   componentDidMount() {
+    this.get_counter();
     this.get_users();
     this.get_races();
   }
 
   render(){
-    console.log(this.state.users);
+    console.log(this.state.counter);
     if (this.state.isRegister)
     {
       return(
