@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-
+import MemberList from './MemberList'
 import {db} from '../src/config';
 
 class Members extends React.Component{
@@ -12,6 +12,7 @@ class Members extends React.Component{
 		return(
 			<View style = {styles.container}>
 				<Text style = {styles.text}>Members</Text>
+				<MemberList/>
 			</View>
 
 		);
