@@ -94,7 +94,7 @@ class LoginScreen extends React.Component {
       BIO: bio,
       PASSWORD: password,
       EMAIL: email,
-      RUNS: new Map(),
+      RUNS: [],
     });
     return username
 
@@ -107,7 +107,7 @@ class LoginScreen extends React.Component {
       START: null,
       DISTANCE: distance, //in miles
       STATE: 0, //0-Ready, 1-Running, 2-Done
-      RUNNERS: new Map(),
+      RUNNERS: [],
       ID: this.state.counter
     });
     this.update_counter()
@@ -125,6 +125,23 @@ class LoginScreen extends React.Component {
     });
     this.update_counter()
     return this.state.counter-1
+  }
+
+  add_runner_to_race(runner_id, race_id, username) {
+    for (const id in this.state.races) {
+      if this.state.races.[id].ID == race_id {
+        let runners = this.state.races.[id].RUNNERS
+        let runner = this.create_runner(race_id, username)
+        runners.push(runner)
+        db.ref('/races').update({
+        [id]: {
+          RUNNERS: name,
+          done: !doneState,
+        },
+    });
+        }
+      }
+
   }
 
   create_post(username, race_id, rank){
@@ -192,6 +209,8 @@ class LoginScreen extends React.Component {
     this.get_counter();
     this.get_users();
     this.get_races();
+    this.get_runners();
+    this.get_posts();
   }
 
   render(){
