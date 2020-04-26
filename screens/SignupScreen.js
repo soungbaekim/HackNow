@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
-
+import {db} from '../src/config';
 
 class SignupScreen extends React.Component {
   constructor(props) {
@@ -13,6 +13,24 @@ class SignupScreen extends React.Component {
       username: "",
       email: ""
     }
+  }
+
+  create_user(name, username, image, age, bio, password) {
+    db.ref('/users').push({
+      NAME: name,
+      USERNAME: username,
+      IMAGE: image,
+      AGE: age,
+      BIO: bio,
+      PASSWORD: password,
+      RUNS: new Map(),
+    });
+  }
+
+  passSignInProp()
+  {
+    this.create_user(null, this.username, null, null, null, this.password); 
+    return this.props.signin;
   }
 
 
@@ -40,7 +58,7 @@ class SignupScreen extends React.Component {
         <FormInputText inputType = "Email" value = {this.state.email} onChangeText = {this.handleEmailChange}/>
         <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
         <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
-        <Button label = "Sign up" onPress={this.props.signin}/>
+        <Button label = "Sign up" onPress={this.passSignInProp()}/>
         <Text onPress = {this.props.goToSignIn} style = {styles.text}>Already have an Account? Sign in</Text>
       </View>
       );
