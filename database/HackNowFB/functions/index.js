@@ -125,10 +125,30 @@ exports.raceInit = functions.https.onRequest(async (req, res) => {
 exports.raceGetInvites = functions.https.onRequest(async (req, res) => {
 
   const user_id = req.query.user_id;
-  const race_id = req.query.race_id;
-  const race_dist = req.query.race_dist;
 
-  const docRef = firestore.collection("races").doc(race_id);
+  const docRef = firestore.collection("invites").doc(username);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      res.json({status: true, data: doc.data()});
+    } else {
+      res.json({status: false, data: null});
+    }
+    return;
+  }).catch(function(error) {
+    console.log(error);
+    res.json({status: false, data: null});
+    return;
+  });
+});
+
+
+exports.raceSendInvites = functions.https.onRequest(async (req, res) => {
+  const user_id = req.query.user_id;
+  const invited_id = req.query.invited_id;
+  const race_id = req.query.race_id;
+
+  const docRef = firestore.collection("invites").doc(username);
   docRef.set({
     race_id: race_id,
     race_dist: race_dist,
@@ -142,6 +162,23 @@ exports.raceGetInvites = functions.https.onRequest(async (req, res) => {
   });
 });
 
-
 // Get RaceData
-// Inputs: race_id
+exports.getRace = functions.https.onRequest(async (req, res) => {
+  const race_id = req.query.race_id;
+  const docRef = firestore.collection("users").doc(user_id);
+
+  console.log(user_id);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      res.json({status: true, data: doc.data()});
+    } else {
+      res.json({status: false, data: null});
+    }
+    return;
+  }).catch(function(error) {
+    console.log(error);
+    res.json({status: false, data: null});
+    return;
+  });
+});

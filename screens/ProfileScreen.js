@@ -18,7 +18,7 @@ export default class ProfileScreen extends React.Component {
             'Content-Type': 'application/json',
           },
         }).then((resp) => resp.json()).then((data) => {
-          this.setState({isLoading: false, user_data: data})
+          this.setState({isLoading: false, user_data: data.data})
           console.log("Get User Success!");
         }).catch((e) => {});
   }
@@ -28,6 +28,7 @@ export default class ProfileScreen extends React.Component {
     let {signOut} = this.props;
     let {isLoading, user_data} = this.state;
 
+    console.log(user_data);
 
     if (isLoading) {
       return (<View/>);
@@ -46,7 +47,7 @@ export default class ProfileScreen extends React.Component {
                 <Image source = {require("../assets/logo.png")} style = {styles.profilepic}/>
               </View>
 
-              <Text style = {styles.user} text={user_data.name}>
+              <Text style = {styles.user}>
                 {user_data.name}
               </Text>
               <Text style={styles.bio}>
