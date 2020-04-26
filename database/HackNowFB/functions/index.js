@@ -101,10 +101,7 @@ exports.getUser = functions.https.onRequest(async (req, res) => {
 
 /* Race Functions */
 
-/* Initializes Race
-  Input: user_id (username)
-*/
-/*
+// Initializes Race
 exports.raceInit = functions.https.onRequest(async (req, res) => {
 
   const user_id = req.query.user_id;
@@ -112,7 +109,7 @@ exports.raceInit = functions.https.onRequest(async (req, res) => {
   const race_dist = req.query.race_dist;
 
   const docRef = firestore.collection("races").doc(race_id);
-  await docRef.set({
+  docRef.set({
     race_id: race_id,
     race_dist: race_dist,
     race_state: 0,
@@ -124,4 +121,27 @@ exports.raceInit = functions.https.onRequest(async (req, res) => {
     ],
   });
 });
-*/
+
+exports.raceGetInvites = functions.https.onRequest(async (req, res) => {
+
+  const user_id = req.query.user_id;
+  const race_id = req.query.race_id;
+  const race_dist = req.query.race_dist;
+
+  const docRef = firestore.collection("races").doc(race_id);
+  docRef.set({
+    race_id: race_id,
+    race_dist: race_dist,
+    race_state: 0,
+    runners: [
+      {
+        runner_id: user_id,
+        runner_dist: 0
+      },
+    ],
+  });
+});
+
+
+// Get RaceData
+// Inputs: race_id
