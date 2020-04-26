@@ -3,15 +3,17 @@ import {StyleSheet, TextInput, TextInputProps} from "react-native";
 
 type Props = TextInputProps;
 
-class FormTextInput extends React.Component<Props>{
-	render(){
+const FormTextInput = (props) =>
+{
+	
 		return(
 				<TextInput
 				selectionColor = "#00BBFF"
 				style = {styles.textInput}
+				placeholder = {props.inputType}
 				/>
-			);
-	}
+			)
+	
 }
 
 
@@ -21,9 +23,10 @@ const styles = StyleSheet.create({
 		borderColor: "#c0c0c0",
 		borderWidth: StyleSheet.hairlineWidth,
 		marginBottom: 15,
-		paddingHorizontal: 120,
-		width: "100%",
-		justifyContent: "flex-start"
+		paddingHorizontal: 20,
+		width: "90%",
+		textAlign: "left",
+		marginLeft: 10
 	}
 });
 
