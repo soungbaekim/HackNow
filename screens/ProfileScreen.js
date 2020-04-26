@@ -46,12 +46,11 @@ export default class ProfileScreen extends React.Component {
                 <Image source = {require("../assets/logo.png")} style = {styles.profilepic}/>
               </View>
 
-              <Text style={styles.user}>
-                {user_data.user_name}
-                {user_data.user_age}
+              <Text style = {styles.user} text={user_data.name}>
+                {user_data.name}
               </Text>
               <Text style={styles.bio}>
-                {user_data.user_bio}
+                {user_data.bio}
               </Text>
 
               <Text style={styles.history}>
