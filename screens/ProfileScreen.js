@@ -18,7 +18,7 @@ export default class ProfileScreen extends React.Component {
             'Content-Type': 'application/json',
           },
         }).then((resp) => resp.json()).then((data) => {
-          this.setState({isLoading: false, user_data: data})
+          this.setState({isLoading: false, user_data: data.data})
           console.log("Get User Success!");
         }).catch((e) => {});
   }
@@ -28,6 +28,7 @@ export default class ProfileScreen extends React.Component {
     let {signOut} = this.props;
     let {isLoading, user_data} = this.state;
 
+    console.log(user_data);
 
     if (isLoading) {
       return (<View/>);
@@ -43,13 +44,20 @@ export default class ProfileScreen extends React.Component {
             <View style={styles.header}>
 
               <View style={styles.profilepicWrap}>
-                <Image source = {require("../assets/logo.png")} style = {styles.profilepic}/>
+                <Image source = {{uri: user_data.img}} style = {styles.profilepic}/>
               </View>
 
-              <Text style={styles.user}>JOHN DOE</Text>
-              <Text style={styles.bio}> - BIOGRAPHY - </Text>
+              <Text style = {styles.user}>
+                {user_data.name}
+              </Text>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>AGE: {user_data.age}</Text>
+              <Text style={styles.bio}>
+                {user_data.bio}
+              </Text>
 
-              <Text style={styles.history}>RACE HISTORY</Text>
+              <Text style={styles.history}>
+
+              </Text>
 
 
 

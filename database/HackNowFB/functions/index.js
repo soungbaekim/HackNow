@@ -101,10 +101,7 @@ exports.getUser = functions.https.onRequest(async (req, res) => {
 
 /* Race Functions */
 
-/* Initializes Race
-  Input: user_id (username)
-*/
-/*
+// Initializes Race
 exports.raceInit = functions.https.onRequest(async (req, res) => {
 
   const user_id = req.query.user_id;
@@ -112,7 +109,47 @@ exports.raceInit = functions.https.onRequest(async (req, res) => {
   const race_dist = req.query.race_dist;
 
   const docRef = firestore.collection("races").doc(race_id);
-  await docRef.set({
+  docRef.set({
+    race_id: race_id,
+    race_dist: race_dist,
+    race_state: 0,
+    runners: [
+      {
+        runner_id: user_id,
+        runner_dist: 0
+      },
+    ],
+  });
+});
+
+exports.raceGetInvites = functions.https.onRequest(async (req, res) => {
+
+  const user_id = req.query.user_id;
+
+  const docRef = firestore.collection("invites").doc(username);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      res.json({status: true, data: doc.data()});
+    } else {
+      res.json({status: false, data: null});
+    }
+    return;
+  }).catch(function(error) {
+    console.log(error);
+    res.json({status: false, data: null});
+    return;
+  });
+});
+
+/*
+exports.raceSendInvites = functions.https.onRequest(async (req, res) => {
+  const user_id = req.query.user_id;
+  const invited_id = req.query.invited_id;
+  const race_id = req.query.race_id;
+
+  const docRef = firestore.collection("invites").doc(username);
+  docRef.set({
     race_id: race_id,
     race_dist: race_dist,
     race_state: 0,
@@ -125,3 +162,24 @@ exports.raceInit = functions.https.onRequest(async (req, res) => {
   });
 });
 */
+
+// Get RaceData
+exports.getRace = functions.https.onRequest(async (req, res) => {
+  const race_id = req.query.race_id;
+  const docRef = firestore.collection("races").doc(race_id);
+
+  console.log(race_id);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      res.json({status: true, data: doc.data()});
+    } else {
+      res.json({status: false, data: null});
+    }
+    return;
+  }).catch(function(error) {
+    console.log(error);
+    res.json({status: false, data: null});
+    return;
+  });
+});
