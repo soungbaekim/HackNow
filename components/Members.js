@@ -5,14 +5,15 @@ import {db} from '../src/config';
 
 class Members extends React.Component{
 
-
+ 	
 
 	render()
 	{
+		const {race} = this.props;
 		return(
 			<View style = {styles.container}>
 				<Text style = {styles.text}>Members</Text>
-				<MemberList/>
+				<MemberList members = {this.props.race.runners}/>
 			</View>
 
 		);

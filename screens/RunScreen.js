@@ -9,17 +9,42 @@ class RunScreen extends React.Component
  {
   constructor(props){
     super(props);
+    this.state={
+      race_data:{},
+    }
   }
+
+ componentDidMount() {
+    fetch("https://us-central1-racr2-f3bf3.cloudfunctions.net/getRace?race_id="+"temp race", {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((resp) => resp.json()).then((data) => {
+          this.setState({race_data: data.data})
+          console.log("Get User Success!");
+        }).catch((e) => {});
+  }
+
+
+
+
+
+
+
   render(){
   return (
     <View style = {styles.container}>
       <Text style = {styles.text}>Run Name</Text>
-      <Members/>
+      <Members race = {this.state.race_data}/>
       <StartButton/>
     </View>
   );
 }
 }
+
+
+
 
 const styles = StyleSheet.create({
     container:

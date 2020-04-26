@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import MemberCard from './MemberCard'
 import {db} from '../src/config';
 
-class MemberCard extends React.Component{
+class MemberList extends React.Component{
 
 
 	render()
@@ -14,7 +14,7 @@ class MemberCard extends React.Component{
 				{
 					members.map((member, i) => {
 						return(
-							<MemberCard member = {members[i].id}/>
+							<MemberCard member = {members[i].runner_id}/>
 						);
 					})
 				}
@@ -49,4 +49,4 @@ class MemberCard extends React.Component{
 	});
 
 
-export default MemberCard;
+export default MemberList;
