@@ -85,7 +85,7 @@ class LoginScreen extends React.Component {
   }
 
   create_user(name, username, image, age, bio, password) {
-    
+
     db.ref('/users').push({
       NAME: name,
       USERNAME: username,
@@ -130,12 +130,11 @@ class LoginScreen extends React.Component {
       db.ref('/posts').push({
         POSTER: username,
         RACE: race_id,
-        RANK: rank
+        RANK: rank,
         ID: this.state.counter
       });
-      this.update_counter()
-      return this.state.counter - 1
-    }
+      this.update_counter();
+      return this.state.counter - 1;
   }
 
 
@@ -148,7 +147,7 @@ class LoginScreen extends React.Component {
   {
     this.state.users.map((user, i) =>
     {
-      if (this.state.users[i].USERNAME.equals(this.state.username) 
+      if (this.state.users[i].USERNAME.equals(this.state.username)
         && this.state.users[i].PASSWORD.equals(this.state.password) )
       {
          return true;
@@ -161,7 +160,7 @@ class LoginScreen extends React.Component {
   {
     if (this.check_users)
     {
-      return this.props.signin;
+      return this.props.signin();
     }
   }
 
@@ -207,7 +206,7 @@ class LoginScreen extends React.Component {
         <Image source = {require("../assets/logo.png")} style = {styles.image}/>
         <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
         <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
-        <Button label = "Sign in" onPress={this.goInside.bind(this)}/>
+        <Button label = "Sign in" onPress={() => this.goInside()}/>
         <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
       </View>
       );
