@@ -9,20 +9,20 @@ class RunScreen extends React.Component
  {
   constructor(props){
     super(props);
-    this.state={
-      race_data:{},
+    this.state= {
+      race_data: {},
+      isLoading: true,
     }
   }
 
  componentDidMount() {
-    fetch("https://us-central1-racr2-f3bf3.cloudfunctions.net/getRace?race_id="+"temp race", {
+    fetch("https://us-central1-racr2-f3bf3.cloudfunctions.net/getRace?race_id="+"test race", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         }).then((resp) => resp.json()).then((data) => {
-          this.setState({race_data: data.data})
-          console.log("Get User Success!");
+          this.setState({isLoading: false, race_data: data.data});
         }).catch((e) => {});
   }
 
@@ -32,14 +32,22 @@ class RunScreen extends React.Component
 
 
 
-  render(){
-  return (
-    <View style = {styles.container}>
-      <Text style = {styles.text}>Run Name</Text>
-      <Members race = {this.state.race_data}/>
-      <StartButton/>
-    </View>
-  );
+  render() {
+    console.log()
+    if (this.state.isLoading) {
+      return (
+        <View/>
+      );
+    } else {
+      return (
+        <View style = {styles.container}>
+          <Text style = {styles.text}>Run Name</Text>
+          <Members race = {this.state.race_data}/>
+          <StartButton/>
+        </View>
+      );
+    }
+
 }
 }
 
@@ -60,7 +68,7 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       marginTop: 20
     }
-  
+
 
   });
 

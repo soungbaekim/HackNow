@@ -9,13 +9,14 @@ class MemberCard extends React.Component{
 	render()
 	{
 		const {id} = this.props;
+		console.log(id);
 		return(
 			<View style = {styles.container}>
 				<Text style = {styles.text}>{id}</Text>
 			</View>
 
 		);
-	
+
 	}}
 
 
@@ -38,7 +39,7 @@ class MemberCard extends React.Component{
 			textDecorationLine: 'underline'
 
 		}
-	
+
 
 	});
 

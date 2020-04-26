@@ -9,32 +9,35 @@ class MemberList extends React.Component{
 	render()
 	{
 		const {members} = this.props; //array of members
+		console.log("memlist", members);
+		console.log(members[0]);
+		console.log(members[1].runner_id);
+
 		return(
-			<View>
+			<View style={styles.container}>
 				{
-					members.map((member, i) => {
+					members.map(function(member, i) {
 						return(
-							<MemberCard member = {members[i].runner_id}/>
+							<MemberCard key={i} id={member.runner_id}/>
 						);
 					})
 				}
 			</View>
 
 		);
-	
+
 	}}
 
 
 	const styles = StyleSheet.create({
 		container:
 		{
-			width: "90%",
+			flex: 1,
 			backgroundColor: "#66FFB2",
-			alignItems: "center",
-			padding: 30,
-			margin: 20,
+			alignItems: "stretch",
+			//padding: 30,
+			//margin: 20,
 			borderRadius: 5,
-			height: "10%"
 		},
 		text:
 		{
@@ -44,7 +47,7 @@ class MemberList extends React.Component{
 			textDecorationLine: 'underline'
 
 		}
-	
+
 
 	});
 
