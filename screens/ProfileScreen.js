@@ -2,33 +2,61 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native';
 
 export default class ProfileScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user_data: null,
+      isLoading: true,
+    }
+  }
+
+  componentDidMount() {
+    fetch("https://us-central1-racr2-f3bf3.cloudfunctions.net/getUser?user_id="+global.user_id, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((resp) => resp.json()).then((data) => {
+          this.setState({isLoading: false, user_data: data})
+        }).catch((e) => {});
+  }
+
+
   render() {
     let {signOut} = this.props;
-
-    return (
-      <View style={styles.container}>
-        <Text>Profile Screen</Text>
-        <TouchableOpacity style={styles.logout_button} onPress={() => global.signOut()}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>LOGOUT</Text>
-        </TouchableOpacity>
+    let {isLoading, user_data} = this.state;
 
 
-          <View style={styles.header}>
+    if (isLoading) {
+      return (<View/>);
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text>Profile Screen</Text>
+          <TouchableOpacity style={styles.logout_button} onPress={() => global.signOut()}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>LOGOUT</Text>
+          </TouchableOpacity>
 
-            <View style={styles.profilepicWrap}>
-              <Image source = {require("../assets/logo.png")} style = {styles.profilepic}/>
+
+            <View style={styles.header}>
+
+              <View style={styles.profilepicWrap}>
+                <Image source = {require("../assets/logo.png")} style = {styles.profilepic}/>
+              </View>
+
+              <Text style={styles.user}>JOHN DOE</Text>
+              <Text style={styles.bio}> - BIOGRAPHY - </Text>
+
+              <Text style={styles.history}>RACE HISTORY</Text>
+
+
+
             </View>
+        </View>
+      );
+    }
 
-            <Text style={styles.user}>JOHN DOE</Text>
-            <Text style={styles.bio}> - BIOGRAPHY - </Text>
-
-            <Text style={styles.history}>RACE HISTORY</Text>
-
-
-
-          </View>
-      </View>
-    );
   }
 }
 
