@@ -84,7 +84,7 @@ class LoginScreen extends React.Component {
     });
   }
 
-  create_user(name, username, image, age, bio, password) {
+  create_user(name, username, image, age, bio, password, email) {
 
     db.ref('/users').push({
       NAME: name,
@@ -93,6 +93,7 @@ class LoginScreen extends React.Component {
       AGE: age,
       BIO: bio,
       PASSWORD: password,
+      EMAIL: email,
       RUNS: new Map(),
     });
     return username
@@ -198,7 +199,7 @@ class LoginScreen extends React.Component {
     if (this.state.isRegister)
     {
       return(
-        <SignupScreen goToSignIn = {this.handleSignin}/>
+        <SignupScreen goToSignIn = {this.handleSignin} signin = {this.props.signin}/>
         )
     }
     return(

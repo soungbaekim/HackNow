@@ -15,19 +15,27 @@ class SignupScreen extends React.Component {
     }
   }
 
- create_user(username, password) {
+ create_user(name, username, image, age, bio, password, email) {
+
     db.ref('/users').push({
+      NAME: name,
       USERNAME: username,
+      IMAGE: image,
+      AGE: age,
+      BIO: bio,
       PASSWORD: password,
+      EMAIL: email,
       RUNS: new Map(),
     });
+    return username
+
   }
 
 
   passSignInProp()
   {
-    this.create_user(this.state.username, this.state.password); 
-    return this.props.signin;
+    this.create_user("", this.state.username, "", "", "", this.state.password); 
+    return this.props.signin();
   }
 
 
@@ -55,7 +63,7 @@ class SignupScreen extends React.Component {
         <FormInputText inputType = "Email" value = {this.state.email} onChangeText = {this.handleEmailChange}/>
         <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
         <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
-        <Button label = "Sign up" onPress={this.passSignInProp.bind(this)}/>
+        <Button label = "Sign up" onPress={() => this.passSignInProp()}/>
         <Text onPress = {this.props.goToSignIn} style = {styles.text}>Already have an Account? Sign in</Text>
       </View>
       );
