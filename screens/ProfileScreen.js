@@ -19,6 +19,7 @@ export default class ProfileScreen extends React.Component {
           },
         }).then((resp) => resp.json()).then((data) => {
           this.setState({isLoading: false, user_data: data})
+          console.log("Get User Success!");
         }).catch((e) => {});
   }
 
