@@ -71,7 +71,7 @@ class LoginScreen extends React.Component {
     db.ref('/users').remove();
   }
 
-  check_users = () =>
+ check_users = () =>
   {
     this.state.users.map((user, i) =>
     {
@@ -86,7 +86,7 @@ class LoginScreen extends React.Component {
 
   goInside = () =>
   {
-    if (check_users)
+    if (this.check_users)
     {
       return this.props.signin;
     }
@@ -133,7 +133,7 @@ class LoginScreen extends React.Component {
         <Image source = {require("../assets/logo.png")} style = {styles.image}/>
         <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
         <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
-        <Button label = "Sign in" onPress={this.goInside}/>
+        <Button label = "Sign in" onPress={this.goInside.bind(this)}/>
         <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
       </View>
       );
