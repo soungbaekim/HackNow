@@ -2,17 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
-import SignupScreen from './SignupScreen.js'
 
 
-class LoginScreen extends React.Component {
+class SignupScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       password: "",
       username: "",
-      isRegister: false
+      email: ""
     }
   }
 
@@ -26,33 +25,23 @@ class LoginScreen extends React.Component {
   {
     this.setState({username: username})
   };
-
-  handleRegister = () =>
+  handleEmailChange = (email) =>
   {
-    this.setState({isRegister: true})
+    this.setState({email: email})
   };
 
-  handleSignin = () =>
-  {
-    this.setState({isRegister: false})
-  };
 
 
 
   render(){
-    if (this.state.isRegister)
-    {
-      return(
-        <SignupScreen goToSignIn = {this.handleSignin}/>
-        )
-    }
     return(
       <View style={styles.container}>
         <Image source = {require("../assets/logo.png")} style = {styles.image}/>
+        <FormInputText inputType = "Email" value = {this.state.email} onChangeText = {this.handleEmailChange}/>
         <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
         <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
-        <Button label = "Sign in" onPress={this.props.signin}/>
-        <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
+        <Button label = "Sign up" onPress={this.props.signin}/>
+        <Text onPress = {this.props.goToSignIn} style = {styles.text}>Already have an Account? Sign in</Text>
       </View>
       );
 
@@ -75,7 +64,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#00BBFF"
   }
-
 });
 
-export default LoginScreen;
+export default SignupScreen;
