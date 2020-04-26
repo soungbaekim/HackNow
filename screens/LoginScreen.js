@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 import SignupScreen from './SignupScreen.js'
@@ -24,142 +24,7 @@ class LoginScreen extends React.Component {
       //isLoading: false,
     }
   }
-//async get_users = () =>
-  get_counter() {
-    db.ref('/counter').on('value', querySnapShot => {
-      let data = querySnapShot.val() ? querySnapShot.val() : {};
-      let counterItems = {...data};
-      this.setState({
-        counter: counterItems["-M5odzC9IMeSaRd5mS7-"].VAL,
-      });
-    });
-  }
 
-  update_counter(){
-    db.ref('/counter').update({
-      ["-M5odzC9IMeSaRd5mS7-"]: {
-        VAL: this.state.counter + 1
-      },
-    });
-  }
-
-  get_users() {
-    db.ref('/users').on('value', querySnapShot => {
-      let data = querySnapShot.val() ? querySnapShot.val() : {};
-      let userItems = {...data};
-      this.setState({
-        users: userItems,
-      });
-    });
-  }
-
-  get_runners() {
-    db.ref('/runners').on('value', querySnapShot => {
-      let data = querySnapShot.val() ? querySnapShot.val() : {};
-      let runnerItems = {...data};
-      this.setState({
-        runners: runnerItems,
-      });
-    });
-
-  }
-
-  get_races() {
-    db.ref('/races').on('value', querySnapShot => {
-      let data = querySnapShot.val() ? querySnapShot.val() : {};
-      let raceItems = {...data};
-      this.setState({
-        races: raceItems,
-      });
-    });
-  }
-
-  get_posts() {
-    db.ref('/posts').on('value', querySnapShot => {
-      let data = querySnapShot.val() ? querySnapShot.val() : {};
-      let raceItems = {...data};
-      this.setState({
-        posts: raceItems,
-      });
-    });
-  }
-
-  create_user(name, username, image, age, bio, password, email) {
-
-    db.ref('/users').push({
-      NAME: name,
-      USERNAME: username,
-      IMAGE: image,
-      AGE: age,
-      BIO: bio,
-      PASSWORD: password,
-      EMAIL: email,
-      RUNS: [],
-    });
-    return username
-
-  }
-
-  create_race(name, distance) {
-
-    db.ref('/races').push({
-      NAME: name,
-      START: null,
-      DISTANCE: distance, //in miles
-      STATE: 0, //0-Ready, 1-Running, 2-Done
-      RUNNERS: [],
-      ID: this.state.counter
-    });
-    this.update_counter()
-    return this.state.counter-1
-  }
-
-  create_runner(race_id, username){
-    db.ref('/runners').push({
-      RACEID: race_id,
-      NAME: username,
-      STATE: -1, //(-1)-NotReady, 0-Ready, 1-Running, 2-Done
-      DISTANCE: 0, //in miles
-      TIME: 0,
-      ID: this.state.counter
-    });
-    this.update_counter()
-    return this.state.counter-1
-  }
-
-  add_runner_to_race(runner_id, race_id, username) {
-    for (const id in this.state.races) {
-      if this.state.races.[id].ID == race_id {
-        let runners = this.state.races.[id].RUNNERS
-        let runner = this.create_runner(race_id, username)
-        runners.push(runner)
-        db.ref('/races').update({
-        [id]: {
-          RUNNERS: name,
-          done: !doneState,
-        },
-    });
-        }
-      }
-
-  }
-
-  create_post(username, race_id, rank){
-      db.ref('/posts').push({
-        POSTER: username,
-        RACE: race_id,
-        RANK: rank,
-        ID: this.state.counter
-      });
-      this.update_counter();
-      return this.state.counter - 1;
-  }
-
-
-
- clearUsers() {
-    db.ref('/users').remove();
-  }
 
  check_users = () =>
   {
@@ -174,12 +39,31 @@ class LoginScreen extends React.Component {
     return false;
   }
 
+  validate_user = () => {
+    console.log("username: ", this.state.username);
+    console.log("password: ", this.state.password);
+
+    fetch("https://us-central1-racr2-f3bf3.cloudfunctions.net/signIn?user_id="+this.state.username+"&password="+this.state.password, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((resp) => resp.json()).then((data) => {
+          if (data.status) {
+            this.props.signin();
+          }
+        }).catch((e) => {});
+  };
+
   goInside = () =>
   {
+    this.validate_user();
+    /*
     if (this.check_users)
     {
       return this.props.signin();
     }
+    */
   }
 
 
@@ -206,11 +90,13 @@ class LoginScreen extends React.Component {
 
 
   componentDidMount() {
+    /*
     this.get_counter();
     this.get_users();
     this.get_races();
     this.get_runners();
     this.get_posts();
+    */
   }
 
   render(){
@@ -224,8 +110,16 @@ class LoginScreen extends React.Component {
     return(
       <View style={styles.container}>
         <Image source = {require("../assets/logo.png")} style = {styles.image}/>
-        <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
-        <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
+        <TextInput
+				selectionColor = "#00BBFF"
+				style = {styles.textInput}
+				placeholder="Username"
+        onChangeText={(text) => this.handleUsernameChange(text)}/>
+        <TextInput
+				selectionColor = "#00BBFF"
+				style = {styles.textInput}
+				placeholder = "Password"
+        onChangeText={(text) => this.handlePasswordChange(text)}/>
         <Button label = "Sign in" onPress={() => this.goInside()}/>
         <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
       </View>
@@ -249,7 +143,17 @@ const styles = StyleSheet.create({
   text:{
     marginTop: 10,
     color: "#00BBFF"
-  }
+  },
+  textInput: {
+    height: 40,
+    borderColor: "#c0c0c0",
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: 15,
+    paddingHorizontal: 20,
+    width: "90%",
+    textAlign: "left",
+    marginLeft: 10
+  },
 
 });
 
