@@ -1,19 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import FormInputText from '../components/SIText.js';
+import Members from '../components/Members.js';
+import StartButton from '../components/StartButton';
 
-export default function WallScreen() {
+
+class WallScreen extends React.Component
+ {
+  constructor(props){
+    super(props);
+  }
+  render(){
   return (
-    <View style={styles.container}>
-      <Text>Wall Screen</Text>
+    <View>
+      <Text>Wall</Text>
     </View>
   );
 }
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default WallScreen;
