@@ -21,7 +21,7 @@ export default function MainNavigator({ navigation, route }) {
         name="Wall"
         component={WallScreen}
         options={{
-          title: 'Wall',
+          title: 'Posts',
           //tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
