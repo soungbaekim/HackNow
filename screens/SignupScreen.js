@@ -34,8 +34,8 @@ class SignupScreen extends React.Component {
 
   passSignInProp()
   {
-    this.create_user("", this.state.username, "", "", "", this.state.password); 
-    return this.props.signin();
+    this.create_user("", this.state.username, "", "", "", this.state.password, this.state.email); 
+    return global.signIn(this.state.username);
   }
 
 

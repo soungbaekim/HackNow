@@ -48,7 +48,7 @@ export default function Root(props) {
     loadResourcesAndDataAsync();
   }, []);
 
-  signIn = (user_id) => {
+  global.signIn = (user_id) => {
     global.user_id = user_id;
     setSignedIn(true);
   }
@@ -63,7 +63,7 @@ export default function Root(props) {
   } else if (!isSignedIn) {
     return (
       <View style={styles.container}>
-        <LoginScreen signIn={this.signIn}/>
+        <LoginScreen signIn={signIn}/>
       </View>
     );
   } else {
