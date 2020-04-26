@@ -142,7 +142,7 @@ exports.raceGetInvites = functions.https.onRequest(async (req, res) => {
   });
 });
 
-
+/*
 exports.raceSendInvites = functions.https.onRequest(async (req, res) => {
   const user_id = req.query.user_id;
   const invited_id = req.query.invited_id;
@@ -161,13 +161,14 @@ exports.raceSendInvites = functions.https.onRequest(async (req, res) => {
     ],
   });
 });
+*/
 
 // Get RaceData
 exports.getRace = functions.https.onRequest(async (req, res) => {
   const race_id = req.query.race_id;
-  const docRef = firestore.collection("users").doc(user_id);
+  const docRef = firestore.collection("races").doc(race_id);
 
-  console.log(user_id);
+  console.log(race_id);
 
   docRef.get().then(function(doc) {
     if (doc.exists) {
