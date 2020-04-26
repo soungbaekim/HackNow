@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 import SignupScreen from './SignupScreen.js'
@@ -108,21 +108,21 @@ class LoginScreen extends React.Component {
         )
     }
     return(
-      <View style={styles.container}>
-        <Image source = {require("../assets/logo.png")} style = {styles.image}/>
-        <TextInput
-				selectionColor = "#00BBFF"
-				style = {styles.textInput}
-				placeholder="Username"
-        onChangeText={(text) => this.handleUsernameChange(text)}/>
-        <TextInput
-				selectionColor = "#00BBFF"
-				style = {styles.textInput}
-				placeholder = "Password"
-        onChangeText={(text) => this.handlePasswordChange(text)}/>
-        <Button label = "Sign in" onPress={() => this.goInside()}/>
-        <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
-      </View>
+        <ImageBackground style={styles.container} source={require('../assets/coverart.png')} imageStyle={{ resizeMode: 'cover' }}>
+          <Image source = {require("../assets/logo.png")} style = {styles.image}/>
+          <TextInput
+    				selectionColor = "#00BBFF"
+    				style = {styles.textInput}
+    				placeholder="Username"
+            onChangeText={(text) => this.handleUsernameChange(text)}/>
+          <TextInput
+    				selectionColor = "#00BBFF"
+    				style = {styles.textInput}
+    				placeholder = "Password"
+            onChangeText={(text) => this.handlePasswordChange(text)}/>
+          <Button label = "Sign in" onPress={() => this.goInside()}/>
+          <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
+        </ImageBackground>
       );
 
   }
@@ -131,13 +131,12 @@ class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   image: {
-    marginBottom: 15
+    marginBottom: 200
   },
 
   text:{
@@ -148,11 +147,14 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: "#c0c0c0",
     borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 5,
     marginBottom: 15,
     paddingHorizontal: 20,
     width: "90%",
     textAlign: "left",
-    marginLeft: 10
+    marginLeft: 10,
+    opacity: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.76)",
   },
 
 });

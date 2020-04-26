@@ -5,7 +5,7 @@ type Props = TextInputProps;
 
 const FormTextInput = (props) =>
 {
-	
+
 		return(
 				<TextInput
 				selectionColor = "#00BBFF"
@@ -13,7 +13,7 @@ const FormTextInput = (props) =>
 				placeholder = {props.inputType}
 				/>
 			)
-	
+
 }
 
 
@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		width: "90%",
 		textAlign: "left",
-		marginLeft: 10
+		marginLeft: 10,
+
+		backgroundColor: "#FFFFFF",
 	}
 });
 
