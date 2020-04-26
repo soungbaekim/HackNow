@@ -50,7 +50,7 @@ class LoginScreen extends React.Component {
           },
         }).then((resp) => resp.json()).then((data) => {
           if (data.status) {
-            this.props.signin();
+            this.props.signIn(this.state.username);
           }
         }).catch((e) => {});
   };
