@@ -17,6 +17,9 @@ class LoginScreen extends React.Component {
       username: "",
       isRegister: false,
       users: {},
+      races: {},
+      runners: {},
+      posts: {},
       //isLoading: false,
     }
   }
@@ -31,6 +34,16 @@ class LoginScreen extends React.Component {
     });
   }
 
+  get_races() {
+    db.ref('/races').on('value', querySnapShot => {
+      let data = querySnapShot.val() ? querySnapShot.val() : {};
+      let raceItems = {...data};
+      this.setState({
+        races: raceItems,
+      });
+    });
+  }
+
   create_user(name, username, image, age, bio, password) {
     db.ref('/users').push({
       NAME: name,
@@ -39,23 +52,19 @@ class LoginScreen extends React.Component {
       AGE: age,
       BIO: bio,
       PASSWORD: password,
-      //ID: id,
-      Runs: new Map(),
+      RUNS: new Map(),
     });
   }
 
-  create_race(distance) {
+  create_race(name, distance) {
     db.ref('/races').push({
       NAME: name,
-      USERNAME: username,
-      IMAGE: image,
-      AGE: age,
-      BIO: bio,
-      //ID: id,
-      Runs: new Map(),
+      START: null,
+      DISTANCE: distance,
+      STATE: 0, //0-Ready, 1-Running, 2-Done
+      RUNNERS: new Map()
     });
 }
-
 
 
  clearUsers() {
@@ -87,6 +96,7 @@ class LoginScreen extends React.Component {
 
   componentDidMount() {
     this.get_users();
+    this.get_races();
   }
 
   render(){
