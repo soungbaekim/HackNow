@@ -36,7 +36,6 @@ class RunScreen extends React.Component
   return (
     <View style = {styles.container}>
       <Text style = {styles.text}>Run Name</Text>
-      <Members race = {this.state.race_data}/>
       <StartButton/>
     </View>
   );
