@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native';
 export default class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       user_data: null,
       isLoading: true,
+
     }
   }
 
