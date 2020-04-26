@@ -9,21 +9,10 @@ var firestore = firebase.firestore();
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
 
-
+/* Example Functions */
 exports.helloWorld = functions.https.onRequest((request, response) => {
  response.send(request.protocol);
 });
-
-//exports.testWrite = functions.https.onRequest((req, resp) => {});
-/*
-function writeUserData(userId, name, email, imageUrl) {
-  firebase.database().ref('users/' + userId).set({
-    username: name,
-    email: email,
-    profile_picture : imageUrl
-  });
-}
-*/
 
 exports.addMessage = functions.https.onRequest(async (req, res) => {
   // Grab the text parameter.
@@ -60,13 +49,11 @@ exports.signIn = functions.https.onRequest(async (req, res) => {
     res.json({status: false});
     return;
   });
-
-  // add an update user race(s) function
-
 });
 
 
 /* User Functions */
+
 /*
 exports.addUser = functions.https.onRequest(async (req, res) => {
   const user_name= req.query.user_name;
@@ -75,7 +62,7 @@ exports.addUser = functions.https.onRequest(async (req, res) => {
   const user_bio = req.query.user_bio;
 
 
-  const docRef = firestone.colleciton("users").doc(user_id)
+  const docRef = firestore.collection("users").doc(user_id)
   await docRef.set({
     user_age = user_age,
     user_bio = user_bio,
@@ -83,13 +70,33 @@ exports.addUser = functions.https.onRequest(async (req, res) => {
   });
 
   const docRef = firestone.colleciton("users").doc(user_id).collection("races").doc(race_id)
-  // add an update user race(s) function
-
-
 
 
 });
 */
+
+
+exports.getUser = functions.https.onRequest(async (req, res) => {
+  const user_id = req.query.user_id;
+  const docRef = firestore.collection("users").doc(user_id);
+
+  console.log(user_id);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      res.json({status: true, data: doc.data()});
+    } else {
+      res.json({status: false, data: null});
+    }
+    return;
+  }).catch(function(error) {
+    console.log(error);
+    res.json({status: false, data: null});
+    return;
+  });
+});
+
+
 
 
 /* Race Functions */
