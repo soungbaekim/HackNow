@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 import SignupScreen from './SignupScreen.js'
@@ -126,7 +126,7 @@ class LoginScreen extends React.Component {
     this.update_counter()
     return this.state.counter-1
   }
-
+/*
   add_runner_to_race(runner_id, race_id, username) {
     for (const id in this.state.races) {
       if this.state.races.[id].ID == race_id {
@@ -143,6 +143,8 @@ class LoginScreen extends React.Component {
       }
 
   }
+
+  */
 
   create_post(username, race_id, rank){
       db.ref('/posts').push({
@@ -222,13 +224,15 @@ class LoginScreen extends React.Component {
         )
     }
     return(
-      <View style={styles.container}>
-        <Image source = {require("../assets/logo.png")} style = {styles.image}/>
-        <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
-        <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
-        <Button label = "Sign in" onPress={() => this.goInside()}/>
-        <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
-      </View>
+
+      <ImageBackground style={styles.container} source={require('../assets/coverart.png')} imageStyle={{ resizeMode: 'cover' }}>
+          <Image source = {require("../assets/logo.png")} style = {styles.image}/>
+          <FormInputText inputType = "Username" value = {this.state.username} onChangeText = {this.handleUsernameChange}/>
+          <FormInputText inputType = "Password" value = {this.state.password} onChangeText = {this.handlePasswordChange}/>
+          <Button label = "Sign in" onPress={() => this.goInside()}/>
+          <Text onPress = {this.handleRegister} style = {styles.text}>Create an account</Text>
+      </ImageBackground>
+
       );
 
   }
@@ -237,13 +241,12 @@ class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   image: {
-    marginBottom: 15
+    marginBottom: 200
   },
 
   text:{
