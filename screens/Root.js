@@ -62,7 +62,7 @@ export default function Root(props) {
   } else if (!isSignedIn) {
     return (
       <View style={styles.container}>
-        <LoginScreen signin={signIn}/>
+        <LoginScreen signin={this.signIn}/>
       </View>
     );
   } else {

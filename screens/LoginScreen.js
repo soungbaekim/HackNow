@@ -4,6 +4,9 @@ import Button from '../components/SIButton.js';
 import FormInputText from '../components/SIText.js';
 import SignupScreen from './SignupScreen.js'
 
+import {db} from '../src/config';
+
+
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -40,6 +43,7 @@ class LoginScreen extends React.Component {
       Runs: new Map(),
     });
   }
+
   create_race(distance) {
     db.ref('/races').push({
       NAME: name,
@@ -82,7 +86,7 @@ class LoginScreen extends React.Component {
 
 
   componentDidMount() {
-    get_users();
+    this.get_users();
   }
 
   render(){
