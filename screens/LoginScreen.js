@@ -31,14 +31,14 @@ class LoginScreen extends React.Component {
     });
   }
 
-
-  create_user(name, username, image, age, bio) {
+  create_user(name, username, image, age, bio, password) {
     db.ref('/users').push({
       NAME: name,
       USERNAME: username,
       IMAGE: image,
       AGE: age,
       BIO: bio,
+      PASSWORD: password,
       //ID: id,
       Runs: new Map(),
     });
