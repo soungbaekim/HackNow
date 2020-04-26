@@ -11,7 +11,7 @@ class Button extends React.Component {
 		const {label, onPress} = this.props;
 		return (
 			<TouchableOpacity style = {styles.container} onPress = {() => onPress()}>
-				<Text style = {styles.text}>Sign in</Text>
+				<Text style = {styles.text}>{label}</Text>
 			</TouchableOpacity>
 			);
 	}
