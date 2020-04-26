@@ -48,8 +48,12 @@ export default function Root(props) {
     loadResourcesAndDataAsync();
   }, []);
 
-  signin = () => {
+  signIn = () => {
     setSignedIn(true);
+  }
+
+  global.signOut = () => {
+    setSignedIn(false);
   }
 
 
@@ -58,16 +62,16 @@ export default function Root(props) {
   } else if (!isSignedIn) {
     return (
       <View style={styles.container}>
-        <LoginScreen signin={signin}/>
+        <LoginScreen signin={signIn}/>
       </View>
     );
   } else {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={MainNavigator} />
+        <NavigationContainer ref={containerRef} initialState={initialNavigationState} signOut={signOut}>
+          <Stack.Navigator signOut={signOut}>
+            <Stack.Screen name="Root" component={MainNavigator} signOut={signOut}/>
           </Stack.Navigator>
         </NavigationContainer>
       </View>
